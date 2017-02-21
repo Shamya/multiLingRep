@@ -1,3 +1,7 @@
+*.xml*
 *.zip
 *.png
 .ipynb_checkpoints
+.DS_Store
+PythonNotebooks/daniel
+PythonNotebooks/data/spanishWiki
