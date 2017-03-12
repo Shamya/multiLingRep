@@ -6,3 +6,4 @@
 PythonNotebooks/daniel
 PythonNotebooks/data/spanishWiki
 data/eswiki/
+*.pyc
