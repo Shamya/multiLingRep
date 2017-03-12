@@ -32,17 +32,21 @@ def parseFileForSentimentAnalysis(lines, Dataset):
     return Dataset(lines)
 
 def returnDataSets():
-    f = open("data/EnglishSentimentDataSet/CustomerReview1/Readme.txt", "r") 
+    # f = open("data/EnglishSentimentDataSet/CustomerReview1/Readme.txt", "r") 
     # print f.read()
-    path = "data/EnglishSentimentDataSet/CustomerReview1/"
-    files = os.listdir(path)
-    Datasets = []
-    if 'Readme.txt' in files:
-        files.remove('Readme.txt')
-    for fileName in files:
-        f = open(path+fileName, "r")
-        lines = f.readlines()
-        DS = parseFileForSentimentAnalysis(lines, CustomerReview1)
-        Datasets.append( DS )
-    return Datasets
+    filePaths = ['CustomerReview1/', 'CustomerReviewIJCAI/', 'ProductReview/']
+    path = "data/EnglishSentimentDataSet/"
+    for filepath in filePaths:
+        directory = path+filepath
+        files = os.listdir(directory)
+        Datasets = []
+        if 'Readme.txt' in files:
+            files.remove('Readme.txt')
+        for fileName in files:
+            if fileName.endswith(".txt"):
+                f = open(directory+fileName, "r")
+                lines = f.readlines()
+                DS = parseFileForSentimentAnalysis(lines, CustomerReview1)
+                Datasets.append( DS )
+        return Datasets
 # print returnDataSets()
