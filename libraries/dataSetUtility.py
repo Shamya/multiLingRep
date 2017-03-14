@@ -6,7 +6,7 @@ import pandas as pd;
 import itertools
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
-from MLClassifier import classifierModel
+from MLClassifier import classifierModel, RandForest, LR
 # train, test = train_test_split( data, train_size = 0.8, random_state = 44 )
 
 
@@ -63,10 +63,10 @@ def prepareDataSetForSKlearn(TrainSet, ValidSet, TestSet, combineTrainValid=True
   # Numpy arrays are easy to work with, so convert the result to an 
   # array
 
-  # classifier = classifierModel(RandForest, train_data_features, train["ClassifiedOutput"], )
+  classifier = classifierModel(RandForest)
 
   # Initialize a Random Forest classifier with 100 trees
-  classifier = RandomForestClassifier(n_estimators = 100) 
+  # classifier = RandomForestClassifier(n_estimators = 100) 
 
   # Fit the forest to the training set, using the bag of words as 
   # features and the sentiment labels as the response variable
