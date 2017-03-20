@@ -176,9 +176,3 @@ with tf.Session(graph=graph) as session:
             print("Avg Loss at Step ", step," =  ", average_loss)
     e =  embeddings.eval()
         
-
-
-# In[62]:
-
-e[0][:]
-

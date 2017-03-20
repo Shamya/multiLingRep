@@ -18,13 +18,14 @@ def parseKeyForLanguage(key):
       Language = match.group(2)
    else:
       assert False, "Error raised"
-   print Language
+   # print Language
    return Language
 
 
 
 class OmegaWiki:
    'OmegaWiki For Translations'
+   setOfLanguages = ['Castilian', 'English']
    
    def __init__(self, word, language):
 
@@ -43,12 +44,17 @@ class OmegaWiki:
 
    def parseData(self, data):
       self.Dict = rec_dd()
-      print data
+      self.RevDict = rec_dd()
+      self.Lang = defaultdict(list)
+      # print data
       for key in data:
          if(re.search('Defined Meaning', key)):
             MeaningID = parseKeyForMeaningId(key) # The integer Key Denoting the Value
             Language = parseKeyForLanguage(key) # The String Key Denoting the Language
-            self.Dict[MeaningID][Language] = data[key]
+            if(Language in OmegaWiki.setOfLanguages):
+               self.Dict[MeaningID][Language] = data[key]
+               self.RevDict[Language][MeaningID] = data[key]
+               self.Lang[Language].append(data[key]) # Might need to take care of duplicates or redundant data
 
 
 
