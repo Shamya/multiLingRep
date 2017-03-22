@@ -96,29 +96,32 @@ def ACS(multilingual_data):
         multilingual_data[line_number] = res
     return multilingual_data
 
+def gather_from_dir(Directory):
+    Sentences = []
+    for f in os.walk(Directory):
+        path, x, file_names = f
+        for file_name in file_names:
+            print(str(path)+"/"+str(file_name))
+            with codecs.open(path+"/"+file_name,'rb',encoding='utf-8') as doc:
+                content = doc.read()
+                Sentences += preprocess(content)
+    return Sentences
+
+
 def gather_data():
     # Global list variable for English sentences after processing
     ENG_sentences = []
     # Global list variable for Spanish sentences after processing
     ESP_sentences = []
-
-    for file in ESP_filenames:
-        with codecs.open(os.path.join(ESP_DIR,file),'rb',encoding='utf-8') as espdoc:
-            espcontent =espdoc.read()
-            ESP_sentences += preprocess(espcontent)
-
-    for file in ENG_filenames:
-        with codecs.open(os.path.join(ENG_DIR,file),'rb',encoding='utf-8') as engdoc:
-            engcontent =engdoc.read()
-            ENG_sentences += preprocess(engcontent)
-        
+    ESP_sentences = gather_from_dir(ESP_DIR)
+    ENG_sentences = gather_from_dir(ENG_DIR)
         
     # Assimilated Corpus of Multilingual texts        
     multilingual_data=[]        
     multilingual_data= ENG_sentences + ESP_sentences
     # Random shuffle of the sentences
-    shuffle(multilingual_data[:100])
-    multilingual_data = ACS(multilingual_data)
+    shuffle(multilingual_data)
+    # multilingual_data = ACS(multilingual_data)
     return multilingual_data
 
 

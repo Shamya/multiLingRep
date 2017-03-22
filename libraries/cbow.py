@@ -79,23 +79,16 @@ def generate_embeddings(Sentences):
 
     words = getWords(Sentences)
     Set = set(words)
-    print(Set)
+    # print(Set)
     len_w = len(Set)
-    print(len_w)
+    # print(len_w)
     del Set
     vocabulary_size = len_w+1
     data, count, dictionary, reverse_dictionary = build_dataset(words)
-    print(dictionary)
+    # print(dictionary)
     print('Most common words (+UNK)', count[:5])
-    print('Sample data', data[:10], [reverse_dictionary[i] for i in data[:10]])
 
-    batch, labels = generate_batch(data, batch_size=8, context_window=2)
-
-    for i in range(8):
-        print(batch[i, 0], reverse_dictionary[batch[i, 0]], batch[i, 1], reverse_dictionary[batch[i, 1]],batch[i, 2], reverse_dictionary[batch[i, 2]], batch[i, 3], reverse_dictionary[batch[i, 3]], '->', labels[i, 0], reverse_dictionary[labels[i, 0]])
-
-
-    batch_size = 128
+    batch_size = 1000
     embedding_size = 128
     context_window = 2
     context_size = 2*context_window
