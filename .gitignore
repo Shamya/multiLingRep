@@ -7,4 +7,5 @@ PythonNotebooks/daniel
 PythonNotebooks/data/spanishWiki
 data/eswiki/
 data/*.csv
+wikiDS/
 *.pyc
