@@ -117,7 +117,7 @@ def gather_data():
     multilingual_data=[]        
     multilingual_data= ENG_sentences + ESP_sentences
     # Random shuffle of the sentences
-    shuffle(multilingual_data)
+    shuffle(multilingual_data[:100])
     multilingual_data = ACS(multilingual_data)
     return multilingual_data
 
@@ -163,4 +163,3 @@ def process_and_retrieve_model():
     multilingual_data = gather_data()
     return get_model(multilingual_data)
 
-model = process_and_retrieve_model()
