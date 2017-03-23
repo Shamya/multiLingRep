@@ -3,4 +3,6 @@ scipy
 scikit-learn
 nltk
 pandas==0.16.0
+django
+gensim
 beautifulsoup4
