@@ -128,8 +128,6 @@ def generate_embeddings(Sentences):
                     average_loss /= 2000
                 print("Avg Loss at Step ", step," =  ", average_loss)
         e =  embeddings.eval()
-        print(words[1])
-        print(e[reverse_dictionary[words[1]]])
         save_pkl_file("embeddings_cbow.pkl",e)
         save_pkl_file("dictionary_cbow.pkl",dictionary)
         save_pkl_file("rev_dictionary_cbow.pkl",reverse_dictionary)
