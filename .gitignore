@@ -8,4 +8,5 @@ PythonNotebooks/data/spanishWiki
 data/eswiki/
 data/*.csv
 wikiDS/
+*.pkl
 *.pyc
