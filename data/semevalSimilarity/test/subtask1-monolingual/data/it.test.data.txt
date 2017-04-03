@@ -1,3 +1,4 @@
+word1	word2
 Joule	astronave
 Terra Promessa	Baku
 macchina	bicicletta

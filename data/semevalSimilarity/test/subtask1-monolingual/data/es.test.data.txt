@@ -1,3 +1,4 @@
+word1	word2
 Julio	astronave
 Tierra Prometida	Baku
 coche	bicicleta
