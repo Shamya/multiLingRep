@@ -15,6 +15,7 @@ from bs4 import BeautifulSoup
 from nltk import tokenize
 from random import shuffle
 import ujson
+import gensim
 #from libraries.acs import acs
 
 # In[ ]:
@@ -235,8 +236,60 @@ def embeddings(ENG_sentences,ESP_sentences,multilingual_data):
     model_mul = models.Word2Vec(multilingual_data, size=300, window=5, min_count=5, workers=4)
     model_mul.save(fname3)
 
+def evaluate_embeddings(model):
+    """
+    Evaluating the Embeddings
+    
+    -Performing NLP word tasks with the model
+    -Probability of a text under the model
+    -Correlation with human opinion on word similarity and on analogies
+    -Question-words: Google have released their testing set of about 20,000 syntactic and semantic test examples, 
+    following the “A is to B as C is to D” task
+    - Doesn't match
+    - Most similar
+    
+    
+    """
+    accudict= model.accuracy(os.path.join(os.getcwd(),'questions-words.txt'))
+    for i in range(len(accudict)):
+        print "For category ", accudict[i]['section'], "Accuracy is ", 100*float(len(accudict[i]['correct']))/(len(accudict[i]['incorrect'])+len(accudict[i]['correct']))
 
 
+
+def corpus_stats():
+    
+    # Filenames of the saved models
+    fname1 = os.path.join(os.getcwd(),'word_vectors_eng.txt')
+    fname2 = os.path.join(os.getcwd(),'word_vectors_esp.txt')
+    fname3 = os.path.join(os.getcwd(),'word_vectors_mul.txt')
+    # Loading the models
+    model_eng = gensim.models.Word2Vec.load(fname1)
+    model_esp = gensim.models.Word2Vec.load(fname2)
+    model_mul = gensim.models.Word2Vec.load(fname3)
+    
+    vocab_eng = list(model_eng.vocab.keys())
+    vocab_esp = list(model_esp.vocab.keys())
+    vocab_mul = list(model_mul.vocab.keys())
+    
+    print "\n Vocabulary length of English Corpus : ", len(vocab_eng)
+    print "\n Vocabulary length of Spanish Corpus : ", len(vocab_esp)
+    print "\n Vocabulary length of Multi-lingual Corpus : ", len(vocab_mul)
+    
+    print "Evaluating English embeddings "
+    evaluate_embeddings(model_eng)
+    print "\n\n"
+    print "Evaluating Spanish embeddings "
+    evaluate_embeddings(model_esp)
+    print "\n\n"
+    print "Evaluating Multi-lingual embeddings "
+    evaluate_embeddings(model_mul)
+
+    
+
+        
+"""
+Uncomment the corresponding lines to run the respective code
+"""        
 #ESP_sentences=spanishcorpus("Save")
 #ESP_sentences=spanishcorpus("Load")
 
@@ -247,60 +300,4 @@ def embeddings(ENG_sentences,ESP_sentences,multilingual_data):
 #multilingual_data = multilingualcorpus("Load")
 
 #embeddings(ENG_sentences,ESP_sentences,multilingual_data)
-
-# In[36]:
-"""
-vocab = list(model.vocab.keys())
-vocab_len = len(vocab)
-vocab_len
-
-
-# In[55]:
-
-st= vocab[448]
-st
-
-
-# In[56]:
-
-model[st]
-
-"""
-# In[ ]:
-
-"""
-Evaluating the Embeddings
-
--Performing NLP word tasks with the model
--Probability of a text under the model
--Correlation with human opinion on word similarity and on analogies
--Question-words: Google have released their testing set of about 20,000 syntactic and semantic test examples, 
-following the “A is to B as C is to D” task
-- Doesn't match
-- Most similar
-
-
-"""
-
-"""
-# In[60]:
-
-accudict= model.accuracy(os.path.join(os.getcwd(),'questions-words.txt'))
-
-
-# In[81]:
-
-for i in range(len(accudict)):
-    print "For category ", accudict[i]['section'], "Accuracy is ", 100*float(len(accudict[i]['correct']))/(len(accudict[i]['incorrect'])+len(accudict[i]['correct']))
-
-
-
-# In[83]:
-
-model.most_similar(positive=['woman', 'king'], negative=['man'])
-
-
-# In[85]:
-
-model.similarity('woman', 'man')
-"""
+#corpus_stats()
