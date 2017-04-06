@@ -1,7 +1,7 @@
 from libraries.OmegaWiki import OmegaWiki
 from libraries.parser import returnDataSets
 from libraries.dataSetUtility import splitDataSets, prepareDataSetForSKlearn, prepareDataSetForSKlearnWithEmbeddings
-from libraries.acs import acs
+from libraries.acs import acs,acs_map
 from libraries.embeddings import process_and_retrieve_model, gather_data
 from libraries.cbow import generate_embeddings
 from libraries.sentiment_classifier import sentimentAnalysisFrenchDataset
@@ -10,6 +10,9 @@ def main():
   # Datasets = returnDataSets()
   # Train, Valid, Test = splitDataSets(Datasets)
   # prepareDataSetForSKlearn(Train,Valid,Test)
+
+  print acs_map("haze", language='english', other_language='spanish')
+
   sentimentAnalysisFrenchDataset()
   # Datasets = returnDataSets()
   # Train, Valid, Test = splitDataSets(Datasets)

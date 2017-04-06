@@ -1,4 +1,4 @@
-defined_meaning_id	GROUP_CONCAT(uw_expression.spelling SEPARATOR ',')
+defined_meaning_id	words
 1	GEMET Environmental Thesaurus Relation Types
 3	is part of theme,part of theme
 4	hypernym

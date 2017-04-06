@@ -1,4 +1,4 @@
-defined_meaning_id	GROUP_CONCAT(uw_expression.spelling SEPARATOR ',')
+defined_meaning_id	words
 194	animal
 1503	boira,boirina,boirim,bromitja,broma
 1504	fullatge

@@ -1,3 +1,4 @@
+word1	word2
 cyclone	tifón
 International Mathematical Olympiad	teoría
 translator	extranjero
