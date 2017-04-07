@@ -55,7 +55,6 @@ def vector(model, word, dimensionOfVector):
 def AvgVector(tokens, w2v_model, dimensionOfVector):
   Vector = np.zeros((dimensionOfVector,))
   for token in tokens:
-    print token
     vec_temp = vector(w2v_model, token.lower(), dimensionOfVector)
     Vector += vec_temp - np.mean(vec_temp)
   if(len(tokens) > 0):
@@ -81,17 +80,6 @@ def classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300):
   test_result = classifier.predict(test_X)
   print_accuracy_fscore(train_result, list(Y))
   print_accuracy_fscore(test_result, list(test_Y))
-
-  # classifier = classifierModel(LR)
-
-  # classifier = classifier.fit(np.asarray(X), list(Y))
-  # train_result = classifier.predict(X)
-  # test_result = classifier.predict(test_X)
-  # print_accuracy_fscore(train_result, list(train["ClassifiedOutput"]))
-  # print_accuracy_fscore(test_result, list(test["ClassifiedOutput"]))
-
-
-
 
 def sentimentAnalysisFrenchDataset():
   train_data = sentimentData(TRAIN_FILES)
