@@ -26,7 +26,7 @@ def main():
 
   # Using Tensorflow
   # multilingual_data = gather_data()
-  embeddings, dictionary, rev_dictionary = generate_embeddings(spanishcorpus())
+  embeddings, dictionary, rev_dictionary = generate_embeddings(englishcorpus())
 
 
 if __name__ == "__main__":
