@@ -16,7 +16,7 @@ import tensorflow as tf
 from libraries.fileUtilities import save_pkl_file
 
 batch_size = 500
-embedding_size = 200
+embedding_size = 300
 vocabulary_size = 2000
 generations = 50000
 model_learning_rate = 0.001
@@ -71,12 +71,6 @@ def generate_batch(data, batch_size, context_window):
   return batch, labels
 
 def generate_embeddings(Sentences):
-
-
-    # Declare stop words
-    stops = stopwords.words('english')
-    
-
     words = getWords(Sentences)
     Set = set(words)
     # print(Set)
@@ -128,9 +122,9 @@ def generate_embeddings(Sentences):
                     average_loss /= 2000
                 print("Avg Loss at Step ", step," =  ", average_loss)
         e =  embeddings.eval()
-        save_pkl_file("embeddings_cbow.pkl",e)
-        save_pkl_file("dictionary_cbow.pkl",dictionary)
-        save_pkl_file("rev_dictionary_cbow.pkl",reverse_dictionary)
+        save_pkl_file("embeddings_cbow_spanish.pkl",e)
+        save_pkl_file("dictionary_cbow_spanish.pkl",dictionary)
+        save_pkl_file("rev_dictionary_cbow_spanish.pkl",reverse_dictionary)
         return e, dictionary, reverse_dictionary
 
 # generate_embeddings([['Sentences', 'asdfad','asdfasdfas', 'asdfasdfsadfsdf','asd2122']])

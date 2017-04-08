@@ -6,3 +6,4 @@ pandas==0.16.0
 django
 gensim
 beautifulsoup4
+ujson

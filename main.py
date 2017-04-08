@@ -5,6 +5,7 @@ from libraries.acs import acs,acs_map
 from libraries.embeddings import process_and_retrieve_model, gather_data
 from libraries.cbow import generate_embeddings
 from libraries.sentiment_classifier import sentimentAnalysisFrenchDataset
+from libraries.corpus import spanishcorpus, englishcorpus
 def main():
   # Logistic Regression for Bag Of Words
   # Datasets = returnDataSets()
@@ -13,7 +14,7 @@ def main():
 
   print acs_map("haze", language='english', other_language='spanish')
 
-  sentimentAnalysisFrenchDataset()
+  # sentimentAnalysisFrenchDataset()
   # Datasets = returnDataSets()
   # Train, Valid, Test = splitDataSets(Datasets)
   # #prepareDataSetForSKlearn(Train,Valid,Test)
@@ -25,7 +26,7 @@ def main():
 
   # Using Tensorflow
   # multilingual_data = gather_data()
-  # embeddings, dictionary, rev_dictionary = generate_embeddings(multilingual_data)
+  embeddings, dictionary, rev_dictionary = generate_embeddings(spanishcorpus())
 
 
 if __name__ == "__main__":
