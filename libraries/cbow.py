@@ -15,12 +15,12 @@ from six.moves import xrange  # pylint: disable=redefined-builtin
 import tensorflow as tf
 from libraries.fileUtilities import save_pkl_file
 
-batch_size = 500
-embedding_size = 200
+# batch_size = 500
+# embedding_size = 300
 vocabulary_size = 2000
 generations = 50000
 model_learning_rate = 0.001
-num_sampled = int(batch_size/2)
+# num_sampled = int(batch_size/2)
 window_size = 3
 data_index = 0
 
@@ -31,9 +31,9 @@ def getWords(Sentences):
             words.append(word)
     return words
 
-def build_dataset(words):
+def build_dataset(words, vocab_size):
     count = [['UNK', -1]]
-    count.extend(collections.Counter(words).most_common(vocabulary_size - 1))
+    count.extend(collections.Counter(words).most_common(vocab_size - 1))
     dictionary = dict()
     for word, _ in count:
         dictionary[word] = len(dictionary)
@@ -71,12 +71,6 @@ def generate_batch(data, batch_size, context_window):
   return batch, labels
 
 def generate_embeddings(Sentences):
-
-
-    # Declare stop words
-    stops = stopwords.words('english')
-    
-
     words = getWords(Sentences)
     Set = set(words)
     # print(Set)
@@ -84,12 +78,12 @@ def generate_embeddings(Sentences):
     # print(len_w)
     del Set
     vocabulary_size = len_w+1
-    data, count, dictionary, reverse_dictionary = build_dataset(words)
+    data, count, dictionary, reverse_dictionary = build_dataset(words, vocabulary_size-100)
     # print(dictionary)
     print('Most common words (+UNK)', count[:5])
-
+    vocabulary_size = len(dictionary)
     batch_size = 1000
-    embedding_size = 128
+    embedding_size = 300
     context_window = 2
     context_size = 2*context_window
 
@@ -128,9 +122,9 @@ def generate_embeddings(Sentences):
                     average_loss /= 2000
                 print("Avg Loss at Step ", step," =  ", average_loss)
         e =  embeddings.eval()
-        save_pkl_file("embeddings_cbow.pkl",e)
-        save_pkl_file("dictionary_cbow.pkl",dictionary)
-        save_pkl_file("rev_dictionary_cbow.pkl",reverse_dictionary)
+        save_pkl_file("embeddings_cbow_english.pkl",e)
+        save_pkl_file("dictionary_cbow_english.pkl",dictionary)
+        save_pkl_file("rev_dictionary_cbow_english.pkl",reverse_dictionary)
         return e, dictionary, reverse_dictionary
 
 # generate_embeddings([['Sentences', 'asdfad','asdfasdfas', 'asdfasdfsadfsdf','asd2122']])
