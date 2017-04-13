@@ -15,7 +15,7 @@ from nltk import tokenize
 from random import shuffle
 import ujson
 import gensim
-#from libraries.acs import acs
+from libraries.acs import acs,acs_map
 
 # In[ ]:
 
@@ -184,6 +184,8 @@ def transform(sentences, language):
     for sentence in sentences:
         for ind in xrange(len(sentence)):
             sentence[ind] = acs_map(sentence[ind], language)
+    return sentences
+
 
 def multilingualcorpus(mode,ENG_sentences,ESP_sentences):
     multilingual_data=[]

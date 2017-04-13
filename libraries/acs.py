@@ -44,7 +44,7 @@ def model(ignore):
 def acs_map(word, language='english', other_language='spanish'):
   v = random.random()
   # print v
-  if(v>0.0001):
+  if(v>0.2):
     # om = OmegaWiki(word,"English")
     # Choose a concept
     if(language == "english"):
