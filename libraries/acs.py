@@ -44,7 +44,7 @@ def model(ignore):
 def acs_map(word, language='english', other_language='spanish'):
   v = random.random()
   # print v
-  if(v>0.5):
+  if(v>0.0001):
     # om = OmegaWiki(word,"English")
     # Choose a concept
     if(language == "english"):
@@ -56,7 +56,9 @@ def acs_map(word, language='english', other_language='spanish'):
     if(word in langConcept):
       conceptKey = random.choice(langConcept[word]).strip()
       if(len(conceptOtherLang[conceptKey]) > 0):
-        return random.choice(conceptOtherLang[conceptKey]).strip()
+        transformedWord = random.choice(conceptOtherLang[conceptKey]).strip()
+        print word, " transformed to ", transformedWord
+        return transformedWord #random.choice(conceptOtherLang[conceptKey]).strip()
   return word  
 
 

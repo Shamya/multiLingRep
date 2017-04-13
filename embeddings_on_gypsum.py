@@ -1,4 +1,3 @@
-
 # coding: utf-8
 
 # In[2]:
@@ -70,13 +69,13 @@ class StemmingHelper(object):
 
 # Path to the English and Spanish Wiki Corpii
 
-ENG_DIR = os.path.join(os.getcwd(),"data/English_Wiki")
-ESP_DIR = os.path.join(os.getcwd(),"wikiextractor/Spanish_Wiki")
+# ENG_DIR = os.path.join(os.getcwd(),"data/English_Wiki")
+# ESP_DIR = os.path.join(os.getcwd(),"data/Spanish_Wiki")
 
 # File list in each directory
 
-ENG_filenames=os.listdir(ENG_DIR)
-ESP_filenames=os.listdir(ENG_DIR)
+# ENG_filenames=os.listdir(ENG_DIR)
+# ESP_filenames=os.listdir(ENG_DIR)
 
 def preprocess(content):
     """
@@ -105,15 +104,16 @@ def spanishcorpus(mode):
     if mode=="Load":
         # Reading data back
        print "Loading Spanish"
-       with open('espdata.json', 'r') as f:
+       with open('data/espdata.json', 'r') as f:
              ESP_sentences = ujson.load(f)
        f.close()
-       print "Spanish Loaded" 	
+       print "Spanish Loaded"   
   
     print "Done with Spanish"
     if mode=="Save":
         print "Going through Spanish Wiki"
         for subdir, dirs, files in os.walk(ESP_DIR):
+            print subdir, dirs, files, files[::5]
             for file in files[::5]:
                 with codecs.open(os.path.join(subdir,file),'rb',encoding='utf-8') as espdoc:
                     espcontent =espdoc.read()
@@ -124,7 +124,7 @@ def spanishcorpus(mode):
         print "Pickling Spanish"
         
         # Writing JSON data
-        with open('espdata.json', 'w') as f:
+        with open('data/espdata.json', 'w') as f:
              ujson.dump(ESP_sentences, f)
         f.close()
     return ESP_sentences    
@@ -136,8 +136,8 @@ def englishcorpus(mode):
     
     if mode=="Load":
         # Reading data back
-	print "Loading English"
-        with open('engdata.json', 'r') as f:
+        print "Loading English"
+        with open('data/engdata.json', 'r') as f:
              ENG_sentences = ujson.load(f)
         f.close()
         print "Done with English"
@@ -146,9 +146,9 @@ def englishcorpus(mode):
         print "Going through English Wiki"            
             
         for subdir, dirs, files in os.walk(ENG_DIR):
-	   
+       
            for file in files[::5]:
-		
+        
                 with codecs.open(os.path.join(subdir,file),'rb',encoding='utf-8') as engdoc:
                     engcontent =engdoc.read()
                     ENG_sentences += preprocess(engcontent)
@@ -157,10 +157,10 @@ def englishcorpus(mode):
         print "Pickling English"
         
         # Writing JSON data
-        with open('engdata.json', 'w') as f:
+        with open('data/engdata.json', 'w') as f:
              ujson.dump(ENG_sentences, f)
         f.close()
-	print "Done saving"
+    print "Done saving"
     return ENG_sentences    
         
 
@@ -180,13 +180,17 @@ def ACS_sentences(ENG_sentences):
 
 #ENG_sentences = ACS_sentences(ENG_sentences)
 """
- 
+def transform(sentences, language):
+    for sentence in sentences:
+        for ind in xrange(len(sentence)):
+            sentence[ind] = acs_map(sentence[ind], language)
+
 def multilingualcorpus(mode,ENG_sentences,ESP_sentences):
     multilingual_data=[]
     if mode=="Save":
         
         # Assimilated Corpus of Multilingual texts        
-        multilingual_data= ENG_sentences + ESP_sentences
+        multilingual_data= transform(ENG_sentences,'spanish') + transform(ESP_sentences, 'spanish')
         # Random shuffle of the sentences
         shuffle(multilingual_data)
         # Saving to file
@@ -196,11 +200,11 @@ def multilingualcorpus(mode,ENG_sentences,ESP_sentences):
         with open('multidata.json', 'w') as f:
              ujson.dump(multilingual_data, f)
         f.close()
-	print "Corpus saved"
+    print "Corpus saved"
         
     if mode=="Load":
         # Reading data back
-	print "Load Corpus"
+        print "Load Corpus"
         with open('multidata.json', 'r') as f:
              multilingual_data = ujson.load(f)
         f.close()
@@ -291,13 +295,15 @@ def corpus_stats():
 Uncomment the corresponding lines to run the respective code
 """        
 #ESP_sentences=spanishcorpus("Save")
-#ESP_sentences=spanishcorpus("Load")
-
-#ENG_sentences = englishcorpus("Save")
+ESP_sentences=spanishcorpus("Load")
+#print len(ESP_sentences)
+#print ESP_sentences[0]
+# ENG_sentences = englishcorpus("Save")
 #ENG_sentences = englishcorpus("Load")
-
-#multilingual_data = multilingualcorpus("Save",ENG_sentences, ESP_sentences)
+#print len(ENG_sentences)
+#print (ENG_sentences[0])
+multilingual_data = multilingualcorpus("Save",ESP_sentences, ESP_sentences)
 #multilingual_data = multilingualcorpus("Load")
 
-#embeddings(ENG_sentences,ESP_sentences,multilingual_data)
-#corpus_stats()
+embeddings(ENG_sentences,ESP_sentences,multilingual_data)
+corpus_stats()
