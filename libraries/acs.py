@@ -57,7 +57,7 @@ def acs_map(word, language='english', other_language='spanish'):
       conceptKey = random.choice(langConcept[word]).strip()
       if(len(conceptOtherLang[conceptKey]) > 0):
         transformedWord = random.choice(conceptOtherLang[conceptKey]).strip()
-        print word, " transformed to ", transformedWord
+        # print word, " transformed to ", transformedWord
         return transformedWord #random.choice(conceptOtherLang[conceptKey]).strip()
   return word  
 

@@ -301,10 +301,10 @@ ESP_sentences=spanishcorpus("Load")
 #print len(ESP_sentences)
 #print ESP_sentences[0]
 # ENG_sentences = englishcorpus("Save")
-# ENG_sentences = englishcorpus("Load")
+ENG_sentences = englishcorpus("Load")
 #print len(ENG_sentences)
 #print (ENG_sentences[0])
-multilingual_data = multilingualcorpus("Save",ESP_sentences, ESP_sentences)
+multilingual_data = multilingualcorpus("Save",ENG_sentences, ESP_sentences)
 #multilingual_data = multilingualcorpus("Load")
 
 embeddings(ENG_sentences,ESP_sentences,multilingual_data)
