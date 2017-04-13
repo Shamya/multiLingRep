@@ -69,13 +69,13 @@ class StemmingHelper(object):
 
 # Path to the English and Spanish Wiki Corpii
 
-# ENG_DIR = os.path.join(os.getcwd(),"data/English_Wiki")
-# ESP_DIR = os.path.join(os.getcwd(),"data/Spanish_Wiki")
+ENG_DIR = os.path.join(os.getcwd(),"data/English_Wiki")
+ESP_DIR = os.path.join(os.getcwd(),"data/Spanish_Wiki")
 
 # File list in each directory
 
-# ENG_filenames=os.listdir(ENG_DIR)
-# ESP_filenames=os.listdir(ENG_DIR)
+ENG_filenames=os.listdir(ENG_DIR)
+ESP_filenames=os.listdir(ENG_DIR)
 
 def preprocess(content):
     """
@@ -113,7 +113,7 @@ def spanishcorpus(mode):
     if mode=="Save":
         print "Going through Spanish Wiki"
         for subdir, dirs, files in os.walk(ESP_DIR):
-            print subdir, dirs, files, files[::5]
+            # print subdir, dirs, files, files[::5]
             for file in files[::5]:
                 with codecs.open(os.path.join(subdir,file),'rb',encoding='utf-8') as espdoc:
                     espcontent =espdoc.read()
@@ -230,14 +230,14 @@ def embeddings(ENG_sentences,ESP_sentences,multilingual_data):
     fname3=os.path.join(os.getcwd(),'word_vectors_mul.txt')
     
     # Word2Vec
-    print "Saving English model"
-    model_eng = models.Word2Vec(ENG_sentences, size=300, window=5, min_count=5, workers=4)
-    model_eng.save(fname1)
-    print "Saving Spanish model"
-    model_esp = models.Word2Vec(ESP_sentences, size=300, window=5, min_count=5, workers=4)
-    model_esp.save(fname2)
-    print "Saving multi-lingual model"
+    # print "Saving English model"
+    # model_eng = models.Word2Vec(ENG_sentences, size=300, window=5, min_count=5, workers=4)
+    # model_eng.save(fname1)
+    # print "Saving Spanish model"
+    # model_esp = models.Word2Vec(ESP_sentences, size=300, window=5, min_count=5, workers=4)
+    # model_esp.save(fname2)
     model_mul = models.Word2Vec(multilingual_data, size=300, window=5, min_count=5, workers=4)
+    print "Saving multi-lingual model"
     model_mul.save(fname3)
 
 def evaluate_embeddings(model):
@@ -299,7 +299,7 @@ ESP_sentences=spanishcorpus("Load")
 #print len(ESP_sentences)
 #print ESP_sentences[0]
 # ENG_sentences = englishcorpus("Save")
-#ENG_sentences = englishcorpus("Load")
+# ENG_sentences = englishcorpus("Load")
 #print len(ENG_sentences)
 #print (ENG_sentences[0])
 multilingual_data = multilingualcorpus("Save",ESP_sentences, ESP_sentences)
