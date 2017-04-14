@@ -67,15 +67,28 @@ class StemmingHelper(object):
 
 # In[33]:
 
-# Path to the English and Spanish Wiki Corpii
+# Path to the Language Wiki Corpii
 
-ENG_DIR = os.path.join(os.getcwd(),"data/English_Wiki")
-ESP_DIR = os.path.join(os.getcwd(),"data/Spanish_Wiki")
-
+ENG_DIR = os.path.join(os.getcwd(),"data\\English_Wiki")
+ESP_DIR = os.path.join(os.getcwd(),"wikiextractor\\Spanish_Wiki")
+FRE_DIR = os.path.join(os.getcwd(),"wikiextractor\\French_Wiki")
+ITA_DIR = os.path.join(os.getcwd(),"wikiextractor\\Italian_Wiki")
 # File list in each directory
 
 ENG_filenames=os.listdir(ENG_DIR)
-ESP_filenames=os.listdir(ENG_DIR)
+ESP_filenames=os.listdir(ESP_DIR)
+FRE_filenames=os.listdir(FRE_DIR)
+ITA_filenames=os.listdir(ITA_DIR)
+
+
+# Global list variable for English sentences after processing
+ENG_sentences = []
+# Global list variable for Spanish sentences after processing
+ESP_sentences = []
+# Global list variable for French sentences after processing
+FRE_sentences = []
+# Global list variable for Italian sentences after processing
+ITA_sentences = []
 
 def preprocess(content):
     """
@@ -129,6 +142,58 @@ def spanishcorpus(mode):
         f.close()
     return ESP_sentences    
 
+def frenchcorpus(mode):
+    if mode=="Load":
+        # Reading data back
+        with open('fredata.json', 'r') as f:
+             FRE_sentences = ujson.load(f)
+        f.close()
+    
+    print "Done with French"
+    if mode=="Save":
+        print "Going through French Wiki"
+        for subdir, dirs, files in os.walk(FRE_DIR):
+            for file in files:
+                with codecs.open(os.path.join(subdir,file),'rb',encoding='utf-8') as fredoc:
+                    frecontent = fredoc.read()
+                    print "French"
+                    FRE_sentences += preprocess(frecontent)
+        # Random shuffle of the sentences
+        shuffle(FRE_sentences)
+        # Saving to file
+        print "Pickling French"
+        
+        # Writing JSON data
+        with open('fredata.json', 'w') as f:
+             ujson.dump(FRE_sentences, f)
+        f.close()
+        
+def italiancorpus(mode):
+    if mode=="Load":
+        # Reading data back
+        with open('itadata.json', 'r') as f:
+             ITA_sentences = ujson.load(f)
+        f.close()
+    
+    print "Done with Italian"
+    if mode=="Save":
+        print "Going through Italian Wiki"
+        for subdir, dirs, files in os.walk(ITA_DIR):
+            for file in files:
+                with codecs.open(os.path.join(subdir,file),'rb',encoding='utf-8') as itadoc:
+                    itacontent =itadoc.read()
+                    print "Italian"
+                    ITA_sentences += preprocess(itacontent)
+        # Random shuffle of the sentences
+        shuffle(ITA_sentences)
+        # Saving to file
+        print "Pickling Italian"
+        
+        # Writing JSON data
+        with open('itadata.json', 'w') as f:
+             ujson.dump(ITA_sentences, f)
+        f.close()   
+   
 
 def englishcorpus(mode):
     # Global list variable for English sentences after processing
@@ -227,20 +292,28 @@ def embeddings(ENG_sentences,ESP_sentences,multilingual_data):
     """
     # Persist a model to disk
     
-    fname1=os.path.join(os.getcwd(),'word_vectors_eng.txt')
-    fname2=os.path.join(os.getcwd(),'word_vectors_esp.txt')
-    fname3=os.path.join(os.getcwd(),'word_vectors_mul.txt')
+    fname0=os.path.join(os.getcwd(),'word_vectors_eng.txt')
+    fname1=os.path.join(os.getcwd(),'word_vectors_esp.txt')
+    fname2=os.path.join(os.getcwd(),'word_vectors_fre.txt')
+    fname3=os.path.join(os.getcwd(),'word_vectors_ita.txt')
+    fnamex=os.path.join(os.getcwd(),'word_vectors_mul.txt')
     
     # Word2Vec
-    # print "Saving English model"
-    # model_eng = models.Word2Vec(ENG_sentences, size=300, window=5, min_count=5, workers=4)
-    # model_eng.save(fname1)
-    # print "Saving Spanish model"
-    # model_esp = models.Word2Vec(ESP_sentences, size=300, window=5, min_count=5, workers=4)
-    # model_esp.save(fname2)
-    model_mul = models.Word2Vec(multilingual_data, size=300, window=5, min_count=5, workers=4)
+    print "Saving English model"
+    model_eng = models.Word2Vec(ENG_sentences, size=300, window=5, min_count=5, workers=4)
+    model_eng.save(fname0)
+    print "Saving Spanish model"
+    model_esp = models.Word2Vec(ESP_sentences, size=300, window=5, min_count=5, workers=4)
+    model_esp.save(fname1)
+    print "Saving French model"
+    model_fre = models.Word2Vec(FRE_sentences, size=300, window=5, min_count=5, workers=4)
+    model_fre.save(fname2)
+    print "Saving Italian model"
+    model_ita = models.Word2Vec(ITA_sentences, size=300, window=5, min_count=5, workers=4)
+    model_ita.save(fname3)
     print "Saving multi-lingual model"
-    model_mul.save(fname3)
+    model_mul = models.Word2Vec(multilingual_data, size=300, window=5, min_count=5, workers=4)
+    model_mul.save(fnamex)
 
 def evaluate_embeddings(model):
     """
@@ -265,21 +338,29 @@ def evaluate_embeddings(model):
 def corpus_stats():
     
     # Filenames of the saved models
-    fname1 = os.path.join(os.getcwd(),'word_vectors_eng.txt')
-    fname2 = os.path.join(os.getcwd(),'word_vectors_esp.txt')
-    fname3 = os.path.join(os.getcwd(),'word_vectors_mul.txt')
+    fname0 = os.path.join(os.getcwd(),'word_vectors_eng.txt')
+    fname1 = os.path.join(os.getcwd(),'word_vectors_esp.txt')
+    fname2 = os.path.join(os.getcwd(),'word_vectors_fre.txt')
+    fname3 = os.path.join(os.getcwd(),'word_vectors_ita.txt')
+    fnamex = os.path.join(os.getcwd(),'word_vectors_mul.txt')
     # Loading the models
-    model_eng = gensim.models.Word2Vec.load(fname1)
-    model_esp = gensim.models.Word2Vec.load(fname2)
-    model_mul = gensim.models.Word2Vec.load(fname3)
+    model_eng = gensim.models.Word2Vec.load(fname0)
+    model_esp = gensim.models.Word2Vec.load(fname1)
+    model_fre = gensim.models.Word2Vec.load(fname2)
+    model_ita = gensim.models.Word2Vec.load(fname3)
+    model_mul = gensim.models.Word2Vec.load(fnamex)
     
-    vocab_eng = list(model_eng.vocab.keys())
-    vocab_esp = list(model_esp.vocab.keys())
-    vocab_mul = list(model_mul.vocab.keys())
+    vocab_eng = list(model_eng.wv.vocab.keys())
+    vocab_esp = list(model_esp.wv.vocab.keys())
+    vocab_fre = list(model_fre.wv.vocab.keys())
+    vocab_ita = list(model_ita.wv.vocab.keys())
+    vocab_mul = list(model_mul.wv.vocab.keys())
     
     print "\n Vocabulary length of English Corpus : ", len(vocab_eng)
     print "\n Vocabulary length of Spanish Corpus : ", len(vocab_esp)
-    print "\n Vocabulary length of Multi-lingual Corpus : ", len(vocab_mul)
+    print "\n Vocabulary length of French Corpus : ", len(vocab_fre)
+    print "\n Vocabulary length of Italian Corpus : ", len(vocab_ita)
+    print "\n Vocabulary length of Multi-Lingual Corpus : ", len(vocab_mul)
     
     print "Evaluating English embeddings "
     evaluate_embeddings(model_eng)
@@ -289,7 +370,6 @@ def corpus_stats():
     print "\n\n"
     print "Evaluating Multi-lingual embeddings "
     evaluate_embeddings(model_mul)
-
     
 
         
@@ -297,15 +377,31 @@ def corpus_stats():
 Uncomment the corresponding lines to run the respective code
 """        
 #ESP_sentences=spanishcorpus("Save")
-ESP_sentences=spanishcorpus("Load")
-#print len(ESP_sentences)
-#print ESP_sentences[0]
-# ENG_sentences = englishcorpus("Save")
-ENG_sentences = englishcorpus("Load")
-#print len(ENG_sentences)
-#print (ENG_sentences[0])
-multilingual_data = multilingualcorpus("Save",ENG_sentences, ESP_sentences)
+#ESP_sentences=spanishcorpus("Load")
+
+#FRE_sentences=frenchcorpus("Save")
+#FRE_sentences=frenchcorpus("Load")
+
+#ITA_sentences=italiancorpus("Save")
+#ITA_sentences=italiancorpus("Load")
+
+#ENG_sentences = englishcorpus("Save")
+#ENG_sentences = englishcorpus("Load")
+
+
+# Number of languages
+L=4
+corpus= np.zeros((L,1))
+corpus[0] = ENG_sentences
+corpus[1] = ESP_sentences
+corpus[2] = FRE_sentences
+corpus[3] = ITA_sentences
+
+
+#multilingual_data = multilingualcorpus("Save",ENG_sentences, ESP_sentences)
 #multilingual_data = multilingualcorpus("Load")
 
-embeddings(ENG_sentences,ESP_sentences,multilingual_data)
-corpus_stats()
+
+
+#embeddings(ENG_sentences,ESP_sentences,multilingual_data)
+#corpus_stats()
