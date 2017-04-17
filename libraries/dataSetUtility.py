@@ -44,6 +44,7 @@ def splitDataSets(DataSets, train=0.6, validationSize=0.1, test=0.3):
   return TrainSet, ValidSet, TestSet
 
 
+
 def classify(train, test):
   vectorizer = CountVectorizer(analyzer = "word",   \
                              tokenizer = None,    \
@@ -118,7 +119,7 @@ def prepareDataSetForSKlearn(TrainSet, ValidSet, TestSet, combineTrainValid=True
 
   Test =  list(itertools.chain.from_iterable(TestSet))
   test = pd.DataFrame.from_records(Test)
-  classifyData(train, test)
+  classify(train, test)
   return train, test
 
 # tr, te = prepareDataSetForSKlearn(Train,Validation,Test)

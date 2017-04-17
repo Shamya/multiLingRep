@@ -23,8 +23,18 @@ def print_accuracy_fscore(Y_pred, Y_test):
   
   print scores
   test_acc = correct / count 
-  precision = scores['tp'] / (scores['tp'] + scores['fp'])
-  recall = scores['tp'] / (scores['tp'] + scores['fn'])
-  f_score = (2*precision*recall)/(precision+recall)
-  print "accuracy =", test_acc
-  print "F score =", f_score
+  if(scores['tp']==0):
+    precision = 0
+    recall = 0
+    f_score = 0
+  else:
+    precision = scores['tp'] / (scores['tp'] + scores['fp'])
+    recall = scores['tp'] / (scores['tp'] + scores['fn'])
+    f_score = (2*precision*recall)/(precision+recall)
+  print "Precision : ", precision
+  
+  print "Recall : ", recall
+  
+  print "F score : ", f_score
+  
+  print "Accuracy : ", test_acc

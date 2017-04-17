@@ -40,10 +40,10 @@ def sentimentData(files):
 #Download https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit
 def w2vec_model(lang='en'):
   hashVal = {"en" : "eng", "es" : "esp", "mul" : "mul"}
-  print "LOADING WORD2VEC MODEL"
+  print "LOADING WORD2VEC MODEL - " + hashVal[lang]
   model = gensim.models.Word2Vec.load("data/word_vectors_" + hashVal[lang] + ".txt")
   # model = gensim.models.Word2Vec.load_word2vec_format('../data/word_vectors_eng.txt', binary=False)
-  print "LOADED WORD2VEC MODEL"
+  print "LOADED WORD2VEC MODEL - " + hashVal[lang]
   return model
 
 def vector(model, word, dimensionOfVector):
@@ -61,8 +61,11 @@ def AvgVector(tokens, w2v_model, dimensionOfVector):
     return Vector/len(tokens)
   return np.zeros(dimensionOfVector)
 
-def classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300):
-  w2v_model = w2vec_model('mul')
+def classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300,model=None):
+  if(model!=None):
+    w2v_model = model
+  else:
+    w2v_model = w2vec_model('mul')
   X = []
   test_X = []
   for ind in xrange(len(train_df)):
@@ -78,19 +81,29 @@ def classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300):
   classifier = classifier.fit(np.asarray(X), list(Y))
   train_result = classifier.predict(X)
   test_result = classifier.predict(test_X)
+  print test_result
   print_accuracy_fscore(train_result, list(Y))
   print_accuracy_fscore(test_result, list(test_Y))
 
-def sentimentAnalysisFrenchDataset():
+def sentimentAnalysisSpanishDataset():
   train_data = sentimentData(TRAIN_FILES)
   print len(train_data)
   test_data = sentimentData(TEST_FILES)
   print len(test_data)
-
+  entire_dataset = np.concatenate((train_data,test_data),axis=0)
+  print len(entire_dataset)
   train_df = pd.DataFrame(train_data, columns = ['Sentence' , 'ClassifiedOutput'])
   test_df = pd.DataFrame(test_data, columns = ['Sentence' , 'ClassifiedOutput'])
+  entire_df = pd.DataFrame(entire_dataset, columns = ['Sentence' , 'ClassifiedOutput'])
+  return train_df, test_df, entire_df
+  classify(train_df, test_df)
 
-  # classify(train_df, test_df)
+  # return classifyusingAvgVectors(train_df, test_df)
 
-  return classifyusingAvgVectors(train_df, test_df)
+
+def sentimentAnalysisEnglishDataset():
+  FILE = 'data/EnglishSentimentDataSet/downloaded_tweets.tsv'
+  df = pd.read_csv(FILE, sep='\t')
+  print df
+
 
