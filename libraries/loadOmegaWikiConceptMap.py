@@ -2,11 +2,12 @@ from fileUtilities import load_pkl_file, save_pkl_file
 import io
 from collections import defaultdict
 
-LANGUAGES = ["english", "spanish"]
+LANGUAGES = ["english", "spanish", "french", "italian"]
 DATA = "../omega_wiki_map/"
 
 def loadIntoOmegaWikiConceptMap():
   for language in LANGUAGES:
+    print language
     language_map_concept = defaultdict(list)
     filename = language + "_words.txt"
     f = io.open(DATA+filename)
@@ -16,7 +17,7 @@ def loadIntoOmegaWikiConceptMap():
       language_map_concept[tokens[0]].append(tokens[1])
     save_pkl_file(language + "_map_concept.txt", language_map_concept)
     concept_map_language = defaultdict(list)
-    filename = "concept_" + language + "words.txt"
+    filename = "concept_" + language + "otherwords.txt"
     f = io.open(DATA+filename)
     for line in f.readlines():
       tokens = line.split("\t")
