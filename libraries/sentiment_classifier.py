@@ -5,6 +5,7 @@ from libraries.dataSetUtility import classify
 from libraries.MLClassifier import classifierModel, RandForest, LR
 from libraries.evaluationMetrics import print_accuracy_fscore
 import numpy as np
+from numpy import array
 import gensim
 
 TRAIN_FILES = ['data/SpanishSentimentDataSet/Train/general-tweets-train-tagged.xml']
@@ -48,7 +49,7 @@ def w2vec_model(lang='en'):
 
 def vector(model, word, dimensionOfVector):
   if word in model:
-    return model[word]
+    return array(model[word])
   else:
     return np.zeros(dimensionOfVector)
 
