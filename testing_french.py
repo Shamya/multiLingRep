@@ -239,21 +239,21 @@ train_spanish_df, test_spanish_df, entire_spanish_df = sentimentAnalysisSpanishD
 
 en_es_model = load_factorie_model('en_fr_it_es_word_vectors_com.txt')
 
-print "Trained on Italian , Tested on Italian"
+print "Trained on Italian , Tested on French"
 train_df = train_italian_df
 test_df = test_italian_df
 print "Length of Train : ", str(len(train_df))
 print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
-print "Trained on English , Tested on Italian"
+print "Trained on English , Tested on French"
 train_df = train_english_df
 test_df = entire_italian_df
 print "Length of Train : ", str(len(train_df))
 print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
-print "Trained on spanish , Tested on Italian"
+print "Trained on spanish , Tested on French"
 train_df = train_spanish_df
 test_df = entire_italian_df
 print "Length of Train : ", str(len(train_df))
@@ -264,7 +264,7 @@ es_en_it_train_df = pd.concat([train_english_df, train_spanish_df, train_italian
 es_en_it_test_df = pd.concat([test_english_df, test_spanish_df, test_italian_df], ignore_index=True)
 es_en_it_entire_df = pd.concat([entire_english_df, entire_spanish_df, entire_italian_df], ignore_index=True)
 
-print "Trained on spanish+english+Italian, Tested on Italian"
+print "Trained on spanish+english+French, Tested on French"
 train_df = es_en_it_train_df
 test_df = test_italian_df
 print "Length of Train : ", str(len(train_df))
@@ -272,7 +272,7 @@ print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
 
-print "Trained on spanish+english+Italian , Tested on English"
+print "Trained on spanish+english+French , Tested on English"
 train_df = es_en_it_train_df
 test_df = test_english_df
 print "Length of Train : ", str(len(train_df))
@@ -281,7 +281,7 @@ classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_mode
 
 
 
-print "Trained on spanish+english+Italian , Tested on Spanish"
+print "Trained on spanish+english+French , Tested on Spanish"
 train_df = es_en_it_train_df
 test_df = test_spanish_df
 print "Length of Train : ", str(len(train_df))
@@ -289,7 +289,7 @@ print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
 
-print "Trained on spanish+english+Italian , Tested on spanish+english+Italian"
+print "Trained on spanish+english+French , Tested on spanish+english+French"
 train_df = es_en_it_train_df
 test_df = es_en_it_test_df
 print "Length of Train : ", str(len(train_df))
@@ -299,13 +299,13 @@ classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_mode
 print "Similarity Model"
 
 print "en  similarity "
-Similarity(en_es_model, "subtask1-monolingual/data/en.test.data.txt", "subtask2-crosslingual/keys/en.test.gold.txt");
+Similarity(en_es_model, "subtask1-monolingual/data/en.test.data.txt", "subtask1-monolingual/keys/en.test.gold.txt");
 
 print "es similarity "
-Similarity(en_es_model, "subtask1-monolingual/data/es.test.data.txt", "subtask2-crosslingual/keys/es.test.gold.txt");
+Similarity(en_es_model, "subtask1-monolingual/data/es.test.data.txt", "subtask1-monolingual/keys/es.test.gold.txt");
 
 print "it similarity "
-Similarity(en_es_model, "subtask1-monolingual/data/it.test.data.txt", "subtask2-crosslingual/keys/it.test.gold.txt");
+Similarity(en_es_model, "subtask1-monolingual/data/it.test.data.txt", "subtask1-monolingual/keys/it.test.gold.txt");
 
 
 
@@ -319,33 +319,36 @@ print "es it similarity bilingual"
 Similarity(en_es_model, "subtask2-crosslingual/data/es-it.test.data.txt", "subtask2-crosslingual/keys/es-it.test.gold.txt");
 
 
+
+
+
 print "USING ACS **********************************************************"
 
 # USING ACS GETTING RESULTS :
 en_es_model = load_factorie_model('acs_en_fr_it_es_word_vectors_model.txt')
 
-print "Trained on Italian , Tested on Italian"
+print "Trained on French , Tested on French"
 train_df = train_italian_df
 test_df = test_italian_df
 print "Length of Train : ", str(len(train_df))
 print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
-print "Trained on English , Tested on Italian"
+print "Trained on English , Tested on French"
 train_df = train_english_df
 test_df = entire_italian_df
 print "Length of Train : ", str(len(train_df))
 print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
-print "Trained on spanish , Tested on Italian"
+print "Trained on spanish , Tested on French"
 train_df = train_spanish_df
 test_df = entire_italian_df
 print "Length of Train : ", str(len(train_df))
 print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
-print "Trained on spanish+english+Italian, Tested on Italian"
+print "Trained on spanish+english+French, Tested on French"
 train_df = es_en_it_train_df
 test_df = test_italian_df
 print "Length of Train : ", str(len(train_df))
@@ -353,7 +356,7 @@ print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
 
-print "Trained on spanish+english+Italian , Tested on English"
+print "Trained on spanish+english+French , Tested on English"
 train_df = es_en_it_train_df
 test_df = test_english_df
 print "Length of Train : ", str(len(train_df))
@@ -362,7 +365,7 @@ classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_mode
 
 
 
-print "Trained on spanish+english+Italian , Tested on Spanish"
+print "Trained on spanish+english+French , Tested on Spanish"
 train_df = es_en_it_train_df
 test_df = test_spanish_df
 print "Length of Train : ", str(len(train_df))
@@ -370,7 +373,7 @@ print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
 
-print "Trained on spanish+english+Italian , Tested on spanish+english+Italian"
+print "Trained on spanish+english+French , Tested on spanish+english+French"
 train_df = es_en_it_train_df
 test_df = es_en_it_test_df
 print "Length of Train : ", str(len(train_df))
