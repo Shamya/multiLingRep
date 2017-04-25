@@ -66,6 +66,15 @@ def vector(model, word):
   else:
     return np.zeros(300)
 
+def accuracy_averaged(result, GoldOutput):
+  avg_error = 0
+  cnt = len(result)
+  for ind in range(len(result)):
+    avg_error += (abs(result[ind] - GoldOutput[ind]))
+  print avg_error/cnt
+  return avg_error/cnt
+
+
 def Similarity(model, testfile, goldstandardfile):
     # model = w2vec_model(language)
     outputfile = goldstandardfile
@@ -75,12 +84,12 @@ def Similarity(model, testfile, goldstandardfile):
     Output = []
     for i in xrange(len(p_data)):
         result = 4.0 * cosineSimilarity(vector(model, p_data['word1'][i].lower()), vector(model, p_data['word2'][i].lower()))
-        print p_data['word1'][i], p_data['word2'][i], result
+        # print p_data['word1'][i], p_data['word2'][i], result
         Output.append(result)
     filename = outputfile
     f = io.open(OUTPUT+filename, encoding="utf-8")
     gold_output_data = pd.read_csv(f, sep='\t')
-
+    accuracy_averaged(Output, gold_output_data['Output'])
 
 def w2vec_model(filename):
   print "LOADING WORD2VEC MODEL - " + filename
@@ -372,13 +381,13 @@ classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_mode
 print "Similarity Model"
 
 print "en  similarity "
-Similarity(en_es_model, "subtask1-monolingual/data/en.test.data.txt", "subtask2-crosslingual/keys/en.test.gold.txt");
+Similarity(en_es_model, "subtask1-monolingual/data/en.test.data.txt", "subtask1-monolingual/keys/en.test.gold.txt");
 
 print "es similarity "
-Similarity(en_es_model, "subtask1-monolingual/data/es.test.data.txt", "subtask2-crosslingual/keys/es.test.gold.txt");
+Similarity(en_es_model, "subtask1-monolingual/data/es.test.data.txt", "subtask1-monolingual/keys/es.test.gold.txt");
 
 print "it similarity "
-Similarity(en_es_model, "subtask1-monolingual/data/it.test.data.txt", "subtask2-crosslingual/keys/it.test.gold.txt");
+Similarity(en_es_model, "subtask1-monolingual/data/it.test.data.txt", "subtask1-monolingual/keys/it.test.gold.txt");
 
 
 
