@@ -198,7 +198,7 @@ entire_english_df = pd.DataFrame({'Sentence':(entire_english_X),'ClassifiedOutpu
 train_spanish_df, test_spanish_df, entire_spanish_df = sentimentAnalysisSpanishDataset()
 
 print "USING ES EN MODEL"
-en_es_model = w2vec_model('data/wv_enes_mul.txt')
+en_es_model = w2vec_model('wv_enes_mul.txt')
 
 print "Trained on Es , Tested on En -EXP # 10"
 train_df = train_spanish_df
@@ -222,7 +222,7 @@ es_en_it_entire_df = pd.concat([entire_english_df, entire_spanish_df, entire_ita
 print "USING ACS **********************************************************"
 
 # USING ACS GETTING RESULTS :
-en_es_model = w2vec_model('data/wv_enes_acs.txt')
+en_es_model = w2vec_model('wv_enes_acs.txt')
 
 print "Trained on Es , Tested on En -EXP # 2"
 train_df = train_spanish_df
@@ -240,7 +240,7 @@ classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_mode
 
 print "Other Experiments ****************************************************"
 
-en_es_model = w2vec_model('data/wv_enit_mul.txt')
+en_es_model = w2vec_model('wv_enit_mul.txt')
 
 print "EN IT Model"
 
@@ -263,7 +263,7 @@ classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_mode
 
 
 
-en_es_model = w2vec_model('data/word_vectors_ita.txt')
+en_es_model = w2vec_model('word_vectors_ita.txt')
 
 print "IT Model"
 
