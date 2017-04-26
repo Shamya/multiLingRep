@@ -1,3 +1,4 @@
+word1	word2
 road	autostrada
 chemical substance	base
 Asia	mondo

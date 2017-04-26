@@ -1,3 +1,4 @@
+word1	word2
 computación en la nube	pioggia
 mina	roccia
 prado	prateria
