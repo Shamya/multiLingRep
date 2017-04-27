@@ -167,7 +167,7 @@ def ACS_sentences(ENG_sentences):
 
 #ENG_sentences = ACS_sentences(ENG_sentences)
 """
-def transform(sentences, language, acs=True):
+def transform(sentences, language, acs=False):
     tcnt = 0
     if(acs==False):
         return sentences
@@ -193,7 +193,7 @@ def multilingualcorpus(mode,ENG_sentences,ESP_sentences):
         print "Pickling Multi-Corpus"
         
         # Writing JSON data
-        with open('multidata_ita_esp.json', 'w') as f:
+        with open('multidata_ita_esp_without_acs.json', 'w') as f:
              ujson.dump(multilingual_data, f)
         f.close()
     print "Corpus saved"
@@ -201,7 +201,7 @@ def multilingualcorpus(mode,ENG_sentences,ESP_sentences):
     if mode=="Load":
         # Reading data back
         print "Load Corpus"
-        with open('multidata_ita_esp.json', 'r') as f:
+        with open('multidata_ita_esp_without_acs.json', 'r') as f:
              multilingual_data = ujson.load(f)
         f.close()
         print "Done with Multi-Lingual Corpus"
@@ -223,7 +223,7 @@ def embeddings(ENG_sentences,ESP_sentences,multilingual_data):
     
     # fname1=os.path.join(os.getcwd(),'word_vectors_es_it_mul.txt')
     # fname2=os.path.join(os.getcwd(),'word_vectors_esp.txt')
-    fname3=os.path.join(os.getcwd(),'word_vectors_es_it_mul_acs.txt')
+    fname3=os.path.join(os.getcwd(),'word_vectors_es_it_mul.txt')
     
     # Word2Vec
     # print "Saving Italian model"
