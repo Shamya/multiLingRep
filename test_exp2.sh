@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-#SBATCH --job-name=testExp2
-#SBATCH --output=testExp2_output.txt  # output file
-#SBATCH -e testExp2_error.err        # File to which STDERR will be written 
+#SBATCH --job-name=newtestExp2
+#SBATCH --output=newtestExp2_output.txt  # output file
+#SBATCH -e newtestExp2_error.err        # File to which STDERR will be written 
 #SBATCH --partition=m40-long
 #SBATCH --ntasks=2
 #SBATCH --ntasks-per-node=8
