@@ -194,118 +194,59 @@ train_english_df = pd.DataFrame({'Sentence':(train_X),'ClassifiedOutput':(train_
 test_english_df =  pd.DataFrame({'Sentence':(test_X),'ClassifiedOutput':(test_Y)})
 entire_english_df = pd.DataFrame({'Sentence':(entire_english_X),'ClassifiedOutput':(entire_english_Y)})
 
-
 train_spanish_df, test_spanish_df, entire_spanish_df = sentimentAnalysisSpanishDataset()
-
 
 print "USING ACS **********************************************************"
 
 # USING ACS GETTING RESULTS :
-en_es_model = w2vec_model('wv_enes_acs.txt')
+en_es_model = w2vec_model('word_vectors_es_it_mul.txt')
 
-print "Trained on IT , Tested on IT -EXP # 51"
-train_df = train_italian_df
+print "Trained on ES , Tested on IT -EXP # 58"
+train_df = train_spanish_df
 test_df = test_italian_df
 print "Length of Train : ", str(len(train_df))
 print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
-print "Trained on English , Tested on Italian -EXP # 52"
-train_df = train_english_df
+en_es_model = w2vec_model('word_vectors_es_it_mul_acs.txt')
+
+print "Trained on Es , Tested on Italian -EXP # 59"
+train_df = train_spanish_df
 test_df = test_italian_df
 print "Length of Train : ", str(len(train_df))
 print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
-en_it_train_df = pd.concat([train_english_df, train_italian_df], ignore_index=True)
-
-print "Trained on En + It , Tested on It -EXP # 53"
-train_df = en_it_train_df
-test_df = test_italian_df
-print "Length of Train : ", str(len(train_df))
-print "Length of Test : ", str(len(test_df))
-classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
-
-print "Other Experiments ****************************************************"
-
-en_es_model = load_factorie_model('acs_en_fr_it_es_word_vectors_model.txt')
-
-
-print "Trained on En , Tested on En -EXP # 54"
-train_df = train_english_df
+en_es_model = load_factorie_model('en_fr_it_es_word_vectors_com.txt.txt')
+print "Trained on En , Tested on En -EXP # 60"
+train_df = train_spanish_df
 test_df = test_english_df
 print "Length of Train : ", str(len(train_df))
 print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
 
-print "Trained on En , Tested on En -EXP # 55"
+en_es_model = load_factorie_model('acs_en_fr_it_es_word_vectors_model.txt')
+print "Trained on En , Tested on En -EXP # 61"
 train_df = train_spanish_df
-test_df = test_spanish_df
+test_df = test_english_df
 print "Length of Train : ", str(len(train_df))
 print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
-
-
-print "Trained on En , Tested on En -EXP # 56"
-train_df = train_english_df
-test_df = test_spanish_df
-print "Length of Train : ", str(len(train_df))
-print "Length of Test : ", str(len(test_df))
-classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
 
 print "Other Experiments ****************************************************"
 
-en_es_model = load_factorie_model('en_fr_it_es_word_vectors_com.txt')
 
+en_es_model = w2vec_model('wv_enit_mul.txt')
 
-print "Trained on English , Tested on Italian - Exp # 57"
+print "EN IT Model"
+
+print "Trained on It , Tested on It -EXP # 33"
 train_df = train_english_df
-test_df = test_spanish_df
+test_df = test_italian_df
 print "Length of Train : ", str(len(train_df))
 print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
-
-
-
-
-
-
-
-# en_es_model = w2vec_model('wv_enit_mul.txt')
-
-# print "EN IT Model"
-
-# print "Trained on It , Tested on It -EXP # 47"
-# train_df = train_italian_df
-# test_df = test_italian_df
-# print "Length of Train : ", str(len(train_df))
-# print "Length of Test : ", str(len(test_df))
-# classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
-
-
-# en_it_train_df = pd.concat([train_english_df, train_italian_df], ignore_index=True)
-
-# print "Trained on En + It , Tested on It -EXP # 50"
-# train_df = en_it_train_df
-# test_df = test_italian_df
-# print "Length of Train : ", str(len(train_df))
-# print "Length of Test : ", str(len(test_df))
-# classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
-
-
-
-# en_es_model = w2vec_model('word_vectors_ita.txt')
-
-# print "IT Model"
-
-# print "Trained on It , Tested on It -EXP # 46"
-# train_df = train_italian_df
-# test_df = test_italian_df
-# print "Length of Train : ", str(len(train_df))
-# print "Length of Test : ", str(len(test_df))
-# classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
-
 
