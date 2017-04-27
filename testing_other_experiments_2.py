@@ -217,7 +217,7 @@ print "Length of Train : ", str(len(train_df))
 print "Length of Test : ", str(len(test_df))
 classifyusingAvgVectors(train_df,test_df,dimensionOfVector=300, model=en_es_model)
 
-en_es_model = load_factorie_model('en_fr_it_es_word_vectors_com.txt.txt')
+en_es_model = load_factorie_model('en_fr_it_es_word_vectors_com.txt')
 print "Trained on En , Tested on En -EXP # 60"
 train_df = train_spanish_df
 test_df = test_english_df
